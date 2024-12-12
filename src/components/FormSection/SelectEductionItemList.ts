@@ -4,7 +4,7 @@ interface EducationType {
 
 export const EducationTypeList: EducationType[] = [
   { name: 'Técnico' },
-  { name: 'Tecnológico' },
+  { name: 'Tecnólogo' },
   { name: 'Bacharelado' },
   { name: 'Licenciatura' },
   { name: 'Pós-graduação Lato Sensu (Especialização)' },
