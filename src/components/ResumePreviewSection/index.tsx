@@ -1,4 +1,6 @@
-export const ResumeSection = ({ formData }) => {
+
+
+export const ResumeSection = ({ formData, ref }) => {
   return (
     <div
       className="bg-white scale-75 text-black text-[1.2rem] w-[794px] min-w-[794px] max-w-[794px] h-fit"

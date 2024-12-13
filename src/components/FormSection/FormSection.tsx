@@ -10,7 +10,7 @@ import {
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { Resizable } from "re-resizable";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { ResumeSection } from "../ResumePreviewSection";
 import { SelectEducationItem } from "./SelectEducationItem";
 import { EducationTypeList } from "./SelectEductionItemList";
@@ -25,6 +25,7 @@ import {
 } from "./types";
 
 export const FormSection = () => {
+  const previewRef = useRef(null)
   const [formData, setFormData] = useState<FormDataProps>(initialValueFormData);
   const [course, setCourse] = useState<string>("");
   const [isExperience, setIsExperience] = useState<TExperience>({
@@ -107,7 +108,7 @@ export const FormSection = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-  };
+  };  
 
   const generateResume = async () => {
     const element = document.getElementById("resume");
@@ -526,6 +527,19 @@ export const FormSection = () => {
           </Button>
         </div>
       </form>
+      {display && (
+        <div
+          onClick={() => setDisplay(!display)}
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            height: "100vh",
+            width: "100vw",
+            backgroundColor: "#00000036",
+          }}
+        ></div>
+      )}
       <Resizable
         defaultSize={{ width: "700px", height: "650px" }}
         data-display={display}
@@ -533,7 +547,7 @@ export const FormSection = () => {
         style={{ position: "absolute" }}
       >
         <div className="flex size-full items-center justify-center overflow-y-auto overflow-x-hidden">
-          <ResumeSection formData={formData} />
+          <ResumeSection formData={formData} ref={previewRef} />
         </div>
       </Resizable>
     </section>
