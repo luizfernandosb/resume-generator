@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-
-export const ResumeSection = ({ formData, ref }) => {
+export const ResumeSection = ({ formData }: any) => {
   return (
     <div
-      className="bg-white scale-75 text-black text-[1.2rem] w-[794px] min-w-[794px] max-w-[794px] h-fit"
+      className="bg-white scale-50 text-black text-[1.2rem] w-[794px] min-w-[794px] max-w-[794px] h-fit"
       id="resume"
     >
       {formData && (
@@ -46,7 +46,7 @@ export const ResumeSection = ({ formData, ref }) => {
           <div>
             <h2 className="text-2xl font-bold uppercase mb-3">formação</h2>
             <div className="flex flex-col ">
-              {formData.education.map((item, index) => (
+              {formData.education.map((item: any, index: number) => (
                 <div key={index} className="mb-3">
                   <p className="font-bold">{item.institution}</p>
                   <p>{item.course}</p>
@@ -62,7 +62,7 @@ export const ResumeSection = ({ formData, ref }) => {
           <div>
             <h2 className="text-2xl font-bold uppercase mb-3">Cursos</h2>
             <ul>
-              {formData.courses.map((item, index) => (
+              {formData.courses.map((item: any, index: number) => (
                 <li key={index}>{!item ? "" : item}</li>
               ))}
             </ul>
@@ -71,7 +71,7 @@ export const ResumeSection = ({ formData, ref }) => {
           <div>
             <h2 className="text-2xl font-bold uppercase mb-3">experiência</h2>
             <div className="flex flex-col">
-              {formData.experience.map((item, index) => (
+              {formData.experience.map((item: any, index: number) => (
                 <div key={index} className="mb-3">
                   <p className="font-bold">{item.enterprise}</p>
                   <p>{item.position}</p>
@@ -87,7 +87,7 @@ export const ResumeSection = ({ formData, ref }) => {
           <div>
             <h2 className="text-2xl font-bold uppercase mb-3">Idioma</h2>
             {/* <p>{formData.language}</p> */}
-            {formData.language.map((item, index) => (
+            {formData.language.map((item: any, index: number) => (
               <p key={index}>
                 <strong>{item.language}</strong> {!item.language ? "" : "-"}{" "}
                 {item.level}

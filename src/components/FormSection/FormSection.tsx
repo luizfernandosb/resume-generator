@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/select";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { Resizable } from "re-resizable";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { ResumeSection } from "../ResumePreviewSection";
 import { SelectEducationItem } from "./SelectEducationItem";
 import { EducationTypeList } from "./SelectEductionItemList";
@@ -23,9 +22,18 @@ import {
   TExperience,
   TLanguage,
 } from "./types";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { DialogContent } from "@/components/ui/dialog";
+import { Adress } from "../Adress";
+import { Contact } from "lucide-react";
+import { Email } from "../Email";
+import { Position } from "../Position";
+import { Fullname } from "../Fullname";
+import { Links } from "../Links";
+import { Perfil } from "../Perfil";
+import { Skills } from "../Skills";
 
 export const FormSection = () => {
-  const previewRef = useRef(null)
   const [formData, setFormData] = useState<FormDataProps>(initialValueFormData);
   const [course, setCourse] = useState<string>("");
   const [isExperience, setIsExperience] = useState<TExperience>({
@@ -45,7 +53,6 @@ export const FormSection = () => {
     language: "",
     level: "",
   });
-  const [display, setDisplay] = useState<boolean>(false);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -108,7 +115,7 @@ export const FormSection = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-  };  
+  };
 
   const generateResume = async () => {
     const element = document.getElementById("resume");
@@ -139,117 +146,20 @@ export const FormSection = () => {
         <fieldset className="flex flex-col gap-5 border-2 border-violet-800 p-4">
           <legend className="text-2xl">Informações pessoais</legend>
           <div className="flex gap-2">
-            <div className="flex flex-col w-1/3">
-              <Label htmlFor="fullname" className="text-lg">
-                Nome Completo
-              </Label>
-              <Input
-                placeholder="Nome Completo"
-                name="fullname"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
-            <div className="flex flex-col flex-grow">
-              <Label htmlFor="position" className="text-lg">
-                Cargo desejado
-              </Label>
-              <Input
-                placeholder="Cargo desejado"
-                name="position"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
+            <Fullname onChange={handleOnChange} />
+            <Position onChange={handleOnChange} />
           </div>
           <div className="flex gap-2">
-            <div className="flex flex-col w-1/2">
-              <Label htmlFor="email" className="text-lg">
-                E-mail
-              </Label>
-              <Input
-                placeholder="exemplo@exemplo.com"
-                name="email"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
-
-            <div className="flex flex-col w-1/2">
-              <Label htmlFor="phonenumber" className="text-lg">
-                Telefone para contato
-              </Label>
-              <Input
-                placeholder="+55(00)99999-9999"
-                name="phonenumber"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
+            <Email onChange={handleOnChange} />
+            <Contact onChange={handleOnChange} />
           </div>
-          <div className="flex flex-col w-full">
-            <Label htmlFor="adress" className="text-lg">
-              Endereço
-            </Label>
-            <Input
-              placeholder="R. Exemplo, 1 - Bairro, Cidade/Estado"
-              name="adress"
-              className="w-full placeholder:text-neutral-300"
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <Label htmlFor="links" className="text-lg">
-              Links
-            </Label>
-            <div className="flex w-full gap-2">
-              <Input
-                placeholder="LinkedIn"
-                name="linkedin"
-                className="w-1/3 placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-              <Input
-                placeholder="GitHub"
-                name="github"
-                className="w-1/3 placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-              <Input
-                placeholder="Portfólio"
-                name="portfolio"
-                className="w-1/3 placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
-          </div>
+          <Adress onChange={handleOnChange} />
+          <Links onChange={handleOnChange} />
           <div className="flex gap-2">
-            <div className="flex flex-col w-1/2">
-              <Label htmlFor="perfil" className="text-lg">
-                Perfil Profissional
-              </Label>
-              <Input
-                placeholder="Perfil Profissional"
-                name="perfil"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
-
-            <div className="flex flex-col w-1/2">
-              <Label htmlFor="attributes" className="text-lg">
-                Tecnologias/Habilidades
-              </Label>
-              <Input
-                placeholder="Tecnologias/Habilidades"
-                name="attributes"
-                className="w-full placeholder:text-neutral-300"
-                onChange={handleOnChange}
-              />
-            </div>
+            <Perfil onChange={handleOnChange} />
+            <Skills onChange={handleOnChange} />
           </div>
         </fieldset>
-
         <fieldset className="flex flex-col items-center gap-5 border-2 border-violet-800 p-4">
           <legend className="text-2xl">Formações Acadêmicas</legend>
           <div className="flex gap-2 w-full">
@@ -519,37 +429,18 @@ export const FormSection = () => {
           >
             Gerar Currículo{" "}
           </Button>
-          <Button
-            className="text-xl p-6 px-8 bg-blue-500 hover:bg-blue-600 hover:scale-105 transition-all duration-200 ease-in-out"
-            onClick={() => setDisplay(!display)}
-          >
-            Preview Currículo
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="text-xl p-6 px-8 bg-blue-500 hover:bg-blue-600 hover:scale-105 transition-all duration-200 ease-in-out">
+                Preview Currículo
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="flex size-full  items-center justify-center overflow-y-auto overflow-x-hidden">
+              <ResumeSection formData={formData} />
+            </DialogContent>
+          </Dialog>
         </div>
       </form>
-      {display && (
-        <div
-          onClick={() => setDisplay(!display)}
-          style={{
-            position: "fixed",
-            top: 0,
-            bottom: 0,
-            height: "100vh",
-            width: "100vw",
-            backgroundColor: "#00000036",
-          }}
-        ></div>
-      )}
-      <Resizable
-        defaultSize={{ width: "700px", height: "650px" }}
-        data-display={display}
-        className="flex data-[display=false]:opacity-0 data-[display=false]:-z-10 p-2 bg-white bottom-2 right-2 border-2 border-neutral-800 rounded-md overflow-hidden"
-        style={{ position: "absolute" }}
-      >
-        <div className="flex size-full items-center justify-center overflow-y-auto overflow-x-hidden">
-          <ResumeSection formData={formData} ref={previewRef} />
-        </div>
-      </Resizable>
     </section>
   );
 };
