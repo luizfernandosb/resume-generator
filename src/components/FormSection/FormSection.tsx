@@ -526,6 +526,19 @@ export const FormSection = () => {
           </Button>
         </div>
       </form>
+      {display && (
+        <div
+          onClick={() => setDisplay(!display)}
+          style={{
+            position: "fixed",
+            top: 0,
+            bottom: 0,
+            height: "100vh",
+            width: "100vw",
+            backgroundColor: "#00000036",
+          }}
+        ></div>
+      )}
       <Resizable
         defaultSize={{ width: "700px", height: "650px" }}
         data-display={display}
